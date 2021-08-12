@@ -58,7 +58,7 @@ public class HomeController {
     public String getHome(Mapper mapper, Authentication authentication){
         // make sure link correct attribute names, spelling & syntax with HTML pages
         // and with Service class methods yet to be written ...
-        Integer userFromId = userService.getUserFromId(authentication.getName());
+        int userFromId = userService.getUserFromId(authentication.getName());
         notes = noteService.getNotesFromUserId(userFromId);
         files = fileService.getFilesFromUserId(userFromId);
         credentials = credentialService.getCredentialsFromUserId(userFromId);

@@ -23,7 +23,7 @@ public class ErrorMessageController implements ErrorController {
         model.addAttribute("home",true);
         return "errorPage";
     }
-    
+
     @Override
     public String getErrorPath() {
         return null;
