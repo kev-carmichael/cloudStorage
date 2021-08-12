@@ -48,7 +48,7 @@ public class NoteController {
     }
 
     private String displayOtherErrorMsg(String msg, Model model){
-        model.addAttribute("otherErrorMsg", model);
+        model.addAttribute("otherErrorMsg", msg);
         return "result";
     }
 
