@@ -28,7 +28,7 @@ public class FileController {
 
     @GetMapping("/viewfile/{fileId:.+}")
     public ResponseEntity<Resource>viewFile(@PathVariable int fileId){
-        File file = fileService.getFileFromId(fileId);
+        File file = fileService.viewFileFromId(fileId);
         InputStream inputStream = new ByteArrayInputStream(file.getFileData());
         InputStreamResource inputStreamResource = new InputStreamResource(inputStream);
         return ResponseEntity.ok().headers(HttpHeaders.CONTENT_DISPOSITION, "filename="*file.getFileName()).
@@ -46,7 +46,7 @@ public class FileController {
         int userId = userService.getUserFromId(authentication.getName());
         if(!multipartFile.isEmpty()){
             if(fileService.isOnlyFileName(userId, multipartFile.getOriginalFilename())){
-                return displayResult(model, fileService.addFile(multipartFile, userId));
+                return displayResult(model, fileService.uploadFile(multipartFile, userId));
             } else {
                 return displayFileErrorMsg(model, "That filename already exists");
             } else {
