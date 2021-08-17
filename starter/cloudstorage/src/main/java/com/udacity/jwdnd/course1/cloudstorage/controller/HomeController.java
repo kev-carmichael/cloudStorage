@@ -55,14 +55,14 @@ public class HomeController {
     }
 
     @GetMapping
-    public String getHome(Mapper mapper, Authentication authentication){
+    public String getHome(Model model, Authentication authentication){
         // make sure link correct attribute names, spelling & syntax with HTML pages
         // and with Service class methods yet to be written ...
         int userFromId = userService.getUserFromId(authentication.getName());
         notes = noteService.getNotesFromUserId(userFromId);
         files = fileService.getFilesFromUserId(userFromId);
         credentials = credentialService.getCredentialsFromUserId(userFromId);
-        decryptedPasswords = encryptionService.getDecryptedPasswordsFromUserId(userFromId);
+        decryptedPasswords = credentialService.getDecryptedPasswordsFromUserId(userFromId);
 
         model.addAttribute("credential", new Credential());
         model.addAttribute("note", new Note());
