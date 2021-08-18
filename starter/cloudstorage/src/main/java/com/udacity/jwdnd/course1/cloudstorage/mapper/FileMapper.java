@@ -22,5 +22,5 @@ public interface FileMapper {
 
     @Select("SELECT * FROM FILES WHERE userId = #{userId}")
     List<File> getFilesFromUserId(int userId);
-    
+
 }

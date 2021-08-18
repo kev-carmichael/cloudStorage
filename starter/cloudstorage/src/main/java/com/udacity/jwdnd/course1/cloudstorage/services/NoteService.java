@@ -29,7 +29,7 @@ public class NoteService {
 
     public boolean isOnlyNote(int userId, String noteTitle, String noteDescription){
         Optional<Note>note =
-                Optional.ofNullable(noteMapper.onlyNote(userId, noteTitle, noteDescription));
+                Optional.ofNullable(noteMapper.isOnlyNote(userId, noteTitle, noteDescription));
         return (note.isEmpty());
     }
 
