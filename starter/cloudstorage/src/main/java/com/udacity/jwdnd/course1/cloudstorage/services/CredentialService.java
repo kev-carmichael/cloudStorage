@@ -62,4 +62,9 @@ public class CredentialService {
         return (credential.isEmpty());
     }
 
+    public List<Credential> getFromUserId(int userId) {
+        return credentialMapper.getFromUserId(userId);
+    }
+
+
 }
