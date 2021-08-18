@@ -33,7 +33,7 @@ public class FileService {
         return fileMapper.deleteFile(fileId);
     }
 
-    public isOnlyFileName(int userId, String fileName){
+    public boolean isOnlyFileName(int userId, String fileName){
         Optional<File>file = Optional.ofNullable(fileMapper.isOnlyFileName(userId,fileName));
         return(file.isEmpty());
     }
