@@ -19,8 +19,8 @@ public interface CredentialMapper {
     @Delete("DELETE FROM CREDENTIALS WHERE credentialId = #{credentialId}")
     int deleteCredential(int credentialId);
 
-    @Select("SELECT * FROM CREDENTIALS WHERE userId=#{userId} AND userName=#{userName}")
-    Credential isOnlyUserName(int userId, String userName);
+    @Select("SELECT * FROM CREDENTIALS WHERE userId=#{userId} AND username=#{username}")
+    Credential isOnlyUsername(int userId, String username);
 
     @Select("SELECT * FROM CREDENTIALS WHERE userId=#{userId}")
     List<Credential> getFromUserId(int userId);
