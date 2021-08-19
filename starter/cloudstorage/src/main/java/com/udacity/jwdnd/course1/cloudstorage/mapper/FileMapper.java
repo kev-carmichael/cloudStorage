@@ -5,8 +5,8 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 public interface FileMapper {
 
-    @Insert("INSERT INTO FILES (fileId, filename, contenttype, filesize, userid, filedata)" +
-            "VALUES(#{fileId}, #{filename}, #{contenttype}, #{filesize}, #{userid}, #{filedata})")
+    @Insert("INSERT INTO FILES (fileId, fileName, contentType, fileSize, userId, fileData)" +
+            "VALUES(#{fileId}, #{fileName}, #{contentType}, #{fileSize}, #{userId}, #{fileData})")
     @Options(useGeneratedKeys = true, keyProperty = "fileId")
     int uploadFile(File file);
 

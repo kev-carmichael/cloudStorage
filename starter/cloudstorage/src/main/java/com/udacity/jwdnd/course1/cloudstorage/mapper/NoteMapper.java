@@ -5,8 +5,8 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 public interface NoteMapper {
 
-    @Insert("INSERT INTO NOTES (notetitle, notedescription, userid)" +
-            "VALUES(#{notetitle}, #{notedescription},  #{userid})")
+    @Insert("INSERT INTO NOTES (noteTitle, noteDescription, userId)" +
+            "VALUES(#{noteTitle}, #{noteDescription},  #{userId})")
     @Options(useGeneratedKeys = true, keyProperty = "noteId")
     int addNote(Note note);
 

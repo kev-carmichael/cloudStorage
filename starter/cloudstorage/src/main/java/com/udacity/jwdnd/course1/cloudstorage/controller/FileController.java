@@ -31,7 +31,7 @@ public class FileController {
         File file = fileService.viewFileFromId(fileId);
         InputStream inputStream = new ByteArrayInputStream(file.getFileData());
         InputStreamResource inputStreamResource = new InputStreamResource(inputStream);
-        return ResponseEntity.ok().headers(HttpHeaders.CONTENT_DISPOSITION, "filename="*file.getFileName()).
+        return ResponseEntity.ok().headers(HttpHeaders.CONTENT_DISPOSITION, "fileName="*file.getFileName()).
                 contentType(MediaType.parseMediaType(file.getContentType())).body(inputStreamResource);
     }
 
@@ -48,7 +48,7 @@ public class FileController {
             if(fileService.isOnlyFileName(userId, multipartFile.getOriginalFilename())){
                 return displayResult(model, fileService.uploadFile(multipartFile, userId));
             } else {
-                return displayFileErrorMsg(model, "That filename already exists");
+                return displayFileErrorMsg(model, "That file name already exists");
             } else {
                 return displayFileErrorMsg(model, "Error. Select file to upload first");
             }
