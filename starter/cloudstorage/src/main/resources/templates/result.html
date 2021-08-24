@@ -23,10 +23,10 @@
                 <h1 class="display-5" th:text="${otherErrorMsg}"></h1>
                 <span>Click <a th:href="@{/home}">here</a> to return to home page.</span>
             </div>
-            <div class="alert alert-danger fill-parent">
+            <div class="alert alert-danger fill-parent" th:if="${fileErrorMsg}">
                 <h1 class="display-5">Error</h1>
-                <span>Example Error Message</span>
-                <span>Click <a>here</a> to continue.</span>
+                <span th:text="${fileErrorMsg}}">Example Error Message</span>
+                <span>Click <a th:ref="@{/home}" >here</a> to continue.</span>
             </div>
         </div>
     </body>

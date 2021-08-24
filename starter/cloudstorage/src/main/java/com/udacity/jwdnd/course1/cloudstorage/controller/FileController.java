@@ -66,6 +66,11 @@ public class FileController {
         return "result";
     }
 
+    private String displayFileErrorMsg(String msg, Model model){
+        model.addAttribute("fileErrorMsg", msg);
+        return "result";
+    }
+
     private String displayOtherErrorMsg(String msg, Model model){
         model.addAttribute("otherErrorMsg", msg);
         return "result";
