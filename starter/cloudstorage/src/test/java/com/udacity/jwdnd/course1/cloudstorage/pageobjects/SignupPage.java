@@ -55,7 +55,7 @@ public class SignupPage {
         return inputPassword.getText();
     }
 
-    public String signupButton(){
+    public void signupButton(){
         submitButton.click();
     }
 
@@ -66,5 +66,5 @@ public class SignupPage {
     public String getDisplayedErrorMsg(){
         return errorMsg.getText();
     }
-    
+
 }
