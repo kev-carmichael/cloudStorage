@@ -1,5 +1,8 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
+import com.udacity.jwdnd.course1.cloudstorage.pageobjects.HomePage;
+import com.udacity.jwdnd.course1.cloudstorage.pageobjects.LoginPage;
+import com.udacity.jwdnd.course1.cloudstorage.pageobjects.SignupPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
@@ -13,7 +16,11 @@ class CloudStorageApplicationTests {
 	@LocalServerPort
 	private int port;
 
-	private WebDriver driver;
+	private static WebDriver driver; //made static, as per lessons code
+	private LoginPage loginPage;
+	private SignupPage signupPage;
+	private HomePage homePage;
+	//add addn Page Objects as fields here
 
 	@BeforeAll
 	static void beforeAll() {
