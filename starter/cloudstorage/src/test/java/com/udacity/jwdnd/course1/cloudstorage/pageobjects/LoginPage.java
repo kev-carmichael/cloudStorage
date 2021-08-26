@@ -14,7 +14,7 @@ public class LoginPage {
     @FindBy(id = "inputPassword")
     private WebElement inputPassword;
 
-    @FindBy(id = "submit-button")
+    @FindBy(id = "submit-button")  //login button
     private WebElement submitButton;
 
     @FindBy(id = "signup-link")
@@ -26,6 +26,14 @@ public class LoginPage {
     @FindBy(id = "logout-msg")
     private WebElement logoutMsg;
 
+    //from lessons
+    public void login(String username, String password) {
+        this.inputUsername.sendKeys(username);
+        this.inputPassword.sendKeys(password);
+        this.submitButton.click();
+    }
+
+    // first try tests **********************************
     public LoginPage(WebDriver driver){
         PageFactory.initElements(driver, this);
     }
