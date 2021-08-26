@@ -35,6 +35,17 @@ public class SignupPage {
         PageFactory.initElements(driver, this);
     }
 
+    //from lessons  *******************************************************
+    public void signup(String firstName, String lastName, String username, String password) {
+        this.inputFirstName.sendKeys(firstName);
+        this.inputLastName.sendKeys(lastName);
+        this.inputUsername.sendKeys(username);
+        this.inputPassword.sendKeys(password);
+        this.submitButton.click();
+    }
+
+
+    //first try methods *****************************************
     public void gotoLoginPage(){
         loginLink.click();
     }
