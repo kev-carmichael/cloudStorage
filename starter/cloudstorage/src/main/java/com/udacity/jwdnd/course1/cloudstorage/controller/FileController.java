@@ -47,11 +47,11 @@ public class FileController {
         if(!multipartFile.isEmpty()){
             if(fileService.isOnlyFileName(userId, multipartFile.getOriginalFilename())){
                 return displayResult(model, fileService.uploadFile(multipartFile, userId));
-            } else {
-                return displayFileErrorMsg(model, "That file name already exists");
-            } else {
-                return displayFileErrorMsg(model, "Error. Select file to upload first");
+            } else{
+                return displayFileErrorMsg( "That file name already exists", model);
             }
+        }else {
+            return displayFileErrorMsg( "Error. Select file to upload first", model);
         }
     }
 
