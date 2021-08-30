@@ -41,7 +41,7 @@ class CloudStorageApplicationTests {
 		}
 	}
 
-	@Test  // keep this - is this one of the tests req'd?
+	@Test  // keep this legacy code? is this one of the tests req'd?
 	public void getLoginPage() {
 		driver.get("http://localhost:" + this.port + "/login");
 		assertEquals("Login", driver.getTitle());
@@ -90,6 +90,12 @@ class CloudStorageApplicationTests {
 		//VERIFY HOME PAGE NO LONGER ACCESSIBLE
 		driver.get("http://localhost" + this.port + "/home");
 		assertNotEquals("Home", driver.getTitle());
+	}
+
+	@Test
+	public void _2a_testAddNoteAndVerifyDisplayed(){
+		//ADD NOTE
+
 	}
 
 
