@@ -27,9 +27,9 @@ public class NotePage {
     @FindBy(id = "deleteNoteButton")
     private WebElement deleteNoteButton;
 
-    //note title on note page - ASSUMED NOT REQ'D
+    private final By mainNoteTitle = By.cssSelector("#notesTable tbody tr td:nth-of-type(2)"); //main note page title text
 
-    //note title on note page - ASSUMED NOT REQ'D
+    private final By mainNoteDescription = By.cssSelector("#notesTable tbody tr td:nth-of-type(3)"); //main note page description text
 
     @FindBy(id = "noteModalLabel") //modal heading
     private WebElement noteModalLabel;
@@ -77,10 +77,10 @@ public class NotePage {
             }
     }
 
-    public String getElementText(WebElement element){
-        return element.getText();
+    public String getElementText(By element){
+        return driver.findElement(element).getText();
     }
-
+    
     public void clickElement(WebElement element){
         waitUntilElementClickable(element);
         element.click();
@@ -95,20 +95,15 @@ public class NotePage {
     //**************************************************************************************
 
     public void addNote(String title, String description){
-        //GO TO NOTES TAB
-        gotoNotesTab();
-
+        gotoNotesTab(); //GO TO NOTES TAB
         clickElement(addANewNoteButton);
-        submitNote(title, description);
-        //NOTE SAVED SUCCESS MSG - CLICK TO RETURN TO HOME PAGE
-        clickToReturnToHomePage();
-        //CLICK ON NOTES TAB
-        gotoNotesTab();
-        //PROVE ON NOTES TAB
-        waitUntilElementClickable(addANewNoteButton);
+        inputAndSaveNote(title, description);
+        clickToReturnToHomePage(); //NOTE SAVED SUCCESS MSG - CLICK TO RETURN TO HOME PAGE
+        gotoNotesTab(); //GO TO NOTES TAB
+        waitUntilElementClickable(addANewNoteButton); //VERIFY ON NOTES TAB
     }
 
-    public void submitNote(String title, String description){
+    public void inputAndSaveNote(String title, String description){
         waitUntilElementVisible(noteModalLabel); //note pop-up window
         inputElementText(noteTitle, title);
         inputElementText(noteDescription, description);
@@ -130,12 +125,39 @@ public class NotePage {
         waitUntilElementClickable(addANewNoteButton);
     }
 
+    public void editNote(String title, String description){
+        // need gotoNotesTab()??
+        clickElement(editNoteButton);
+        inputAndSaveNote(title, description);
+        clickToReturnToHomePage(); //NOTE SAVED SUCCESS MSG - CLICK TO RETURN TO HOME PAGE
+        gotoNotesTab(); //GO TO NOTES TAB
+        waitUntilElementClickable(addANewNoteButton); //VERIFY ON NOTES TAB
+    }
 
+    public void deleteNote(){
+        clickElement(deleteNoteButton);
+        waitUntilElementInvisible(addANewNoteButton);
+        clickToReturnToHomePage();
+        gotoNotesTab();
+        waitUntilElementClickable(addANewNoteButton); //VERIFY ON NOTES TAB
+    }
 
+    public String getTitleOnNotePage(){ //FROM MAIN NOTE PAGE; NOT MODAL
+        return getElementText(mainNoteTitle);
+    }
 
+    public String getDescriptionOnNotePage(){ //FROM MAIN NOTE PAGE; NOT MODAL
+        return getElementText(mainNoteDescription);
+    }
 
+    public int getCountOfNotes(){
+        return driver.findElements(mainNoteTitle).size();
+    }
 
+    //test requiring close button clicked not required
 
-
-
+    public void logout(){  //visible on NOtes Page
+        waitUntilElementClickable(logoutButton);
+        clickElement(logoutButton);
+    }
 }
