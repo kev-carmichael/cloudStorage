@@ -80,7 +80,7 @@ public class NotePage {
     public String getElementText(By element){
         return driver.findElement(element).getText();
     }
-    
+
     public void clickElement(WebElement element){
         waitUntilElementClickable(element);
         element.click();
