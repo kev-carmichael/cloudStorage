@@ -5,8 +5,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WrapsDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage {
+
+    public WebDriver driver;
 
     @FindBy(id = "inputUsername")
     private WebElement inputUsername;
@@ -26,40 +30,55 @@ public class LoginPage {
     @FindBy(id = "logout-msg")
     private WebElement logoutMsg;
 
-    //from lessons
-    public void login(String username, String password) {
-        this.inputUsername.sendKeys(username);
-        this.inputPassword.sendKeys(password);
-        this.submitButton.click();
-    }
-
-    // first try tests **********************************
     public LoginPage(WebDriver driver){
         PageFactory.initElements(driver, this);
     }
 
-    public String getDisplayedUsername(){
-        return inputUsername.getText();
+    //****************used in other test classes - make into abstract methods?***************
+    public void waitUntilElementVisible(WebElement element){
+        WebDriverWait webDriverWait = new WebDriverWait(driver, 10);
+        webDriverWait.until(ExpectedConditions.visibilityOf(element));
     }
 
-    public String getDisplayedPassword(){
-        return inputPassword.getText();
+    public void waitUntilElementInvisible(WebElement element){
+        WebDriverWait webDriverWait = new WebDriverWait(driver, 10);
+        webDriverWait.until(ExpectedConditions.invisibilityOf(element));
     }
 
-    public void loginButton(){
-        submitButton.click();
+    public void waitUntilElementClickable(WebElement element){
+        WebDriverWait webDriverWait = new WebDriverWait(driver, 10);
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    public void gotoSignupPage(){
-        signupLink.click();
+    public void inputElementText(WebElement element, String text){
+        waitUntilElementInvisible(element);
+        waitUntilElementClickable(element);
+        element.clear();
+        element.sendKeys(text);
     }
 
-    public String getDisplayedErrorMsg(){
-        return errorMsg.getText();
+    public void clickElement(WebElement element){
+        waitUntilElementClickable(element);
+        element.click();
+    }
+    //**************************************************************************************
+
+    public void waitUntilLoginPageVisible(){
+        waitUntilElementVisible(inputUsername);
+        waitUntilElementVisible(inputPassword);
+        waitUntilElementClickable(submitButton);
+        waitUntilElementClickable(signupLink);
     }
 
-    public String getDisplayedLogoutMsg(){
-        return logoutMsg.getText();
+    public void userEnterDetailsAndLogin(String username, String password){
+        waitUntilLoginPageVisible();
+        inputElementText(inputUsername, username);
+        inputElementText(inputPassword, password);
+        clickElement(submitButton);
     }
 
+    public boolean errorMsgVisible(){
+        waitUntilElementVisible(errorMsg);
+        return errorMsg.isDisplayed();
+    }
 }
