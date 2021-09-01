@@ -2,13 +2,18 @@ package com.udacity.jwdnd.course1.cloudstorage;
 
 import com.udacity.jwdnd.course1.cloudstorage.pageobjects.HomePage;
 import com.udacity.jwdnd.course1.cloudstorage.pageobjects.LoginPage;
+import com.udacity.jwdnd.course1.cloudstorage.pageobjects.NotePage;
 import com.udacity.jwdnd.course1.cloudstorage.pageobjects.SignupPage;
+import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
+import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+
+import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,11 +23,28 @@ class CloudStorageApplicationTests {
 	@LocalServerPort
 	private int port;
 
+	UserService userService;
+	NoteService noteService;
+
 	private static WebDriver driver; //made static, as per lessons code
 	private LoginPage loginPage;
 	private SignupPage signupPage;
 	private HomePage homePage;
-	//add addn Page Objects as fields here
+	private NotePage notePage;
+	private CredentialPage credentialPage;
+	private static final String testFirstName = "TestFirstName";
+	private static final String testLastName = "TestLastName";
+	private static final String testUsername = "TestUsername";
+	private static final String testPassword = "TestPassword";
+	private static final String editedUsername = "EditedUsername";
+	private static final String editedPassword = "EditedPassword";
+	private static final String testNoteTitle = "TestNoteTitle";
+	private static final String testNoteDescription = "TestNoteDescription";
+	private static final String editedNoteTitle = "EditedNoteTitle";
+	private static final String editedNoteDescription = "EditedNoteDescription";
+	private static final String testCredentialUrl = "https://www.selenium.dev";
+	private static final String editedCredentialUrl = "https://www.selenium.dev/selenium/docs/api/java/org/openqa/selenium/WebDriver.html";
+
 
 	@BeforeAll
 	static void beforeAll() {
@@ -32,6 +54,11 @@ class CloudStorageApplicationTests {
 	@BeforeEach
 	public void beforeEach() {
 		this.driver = new ChromeDriver();
+		loginPage = new LoginPage(driver);
+		signupPage = new SignupPage(driver);
+		homePage = new HomePage(driver);
+		notePage = new NotePage(driver);
+		credentialPage = new CredentialPage(driver);
 	}
 
 	@AfterEach
@@ -57,40 +84,38 @@ class CloudStorageApplicationTests {
 		assertEquals("Sign Up", driver.getTitle());
 
 		driver.get("http://localhost" + this.port + "/home");
-		assertEquals("Home", driver.getTitle());
+		assertNotEquals("Home", driver.getTitle());
 	}
 
 	@Test
 	public void _1b_testUserSignupLoginAccessHomePageLogOutAndVerifyHomePageNotAccessible(){
-		//SET USER VALUES
-		String firstName = "John";
-		String lastName = "Smith";
-		String username = "jsmith";
-		String password = "123";
 
-		//USER SIGN IN
+		//USER SIGN UP
 		driver.get("http://localhost:" + this.port + "/signup");
-		signupPage = new SignupPage(driver);  //removed redeclaration of SignupPage
-		signupPage.signup(firstName, lastName, username, password);
+		signupPage.waitUntilSignupPageVisible();
+		signupPage.userEnterDetailsAndSignup(testFirstName, testLastName,
+											testUsername, testPassword);
+		assertTrue(signupPage.successMsgVisible());
 
-		//USER LOG IN
+		//USER LOG IN & HOME PAGE ACCESSIBLE
 		driver.get("http://localhost:" + this.port + "/login");
-		loginPage = new LoginPage(driver); //removed redeclaration of LoginPage
-		loginPage.login(username, password);
-
-		//VERIFY HOME PAGE ACCESSIBLE
-		driver.get("http://localhost:" + this.port + "/home");
+		loginPage.waitUntilLoginPageVisible();
+		loginPage.userEnterDetailsAndLogin(testUsername, testPassword);
+		//check if stored username and password?
 		assertEquals("Home", driver.getTitle());
 
 		//USER LOG OUT
-		homePage = new HomePage(driver); //removed redeclaration of HomePage
 		homePage.logout();
-		assertEquals("Login", driver.getTitle()); //goes to Login page when press Log Out
+		loginPage.waitUntilLoginPageVisible();
+		assertEquals("Login", driver.getTitle()); //check goes to Login page when press Log Out
 
 		//VERIFY HOME PAGE NO LONGER ACCESSIBLE
 		driver.get("http://localhost" + this.port + "/home");
 		assertNotEquals("Home", driver.getTitle());
 	}
+
+
+
 
 	@Test
 	public void _2a_testAddNoteAndVerifyDisplayed(){
