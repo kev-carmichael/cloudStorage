@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.pageobjects.HomePage;
 import com.udacity.jwdnd.course1.cloudstorage.pageobjects.LoginPage;
 import com.udacity.jwdnd.course1.cloudstorage.pageobjects.NotePage;
@@ -14,6 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
 import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -89,7 +92,6 @@ class CloudStorageApplicationTests {
 
 	@Test
 	public void _1b_testUserSignupLoginAccessHomePageLogOutAndVerifyHomePageNotAccessible(){
-
 		//USER SIGN UP
 		driver.get("http://localhost:" + this.port + "/signup");
 		signupPage.waitUntilSignupPageVisible();
@@ -114,13 +116,70 @@ class CloudStorageApplicationTests {
 		assertNotEquals("Home", driver.getTitle());
 	}
 
-
-
-
 	@Test
 	public void _2a_testAddNoteAndVerifyDisplayed(){
-		//ADD NOTE
+		userLoginForTest();
+		notePage.addNote(testNoteTitle, testNoteDescription);
+		assertEquals(testNoteTitle, notePage.getTitleOnNotePage());
+		assertEquals(testNoteDescription, notePage.getDescriptionOnNotePage());
+	}
 
+	@Test
+	public void _2b_testEditExistingNoteAndVerifyChangesDisplayed(){
+		//LOGIN AND ADD NOTE FIRST
+		userLoginForTest();
+		notePage.addNote(testNoteTitle, testNoteDescription);
+		//EDIT NOTE
+		notePage.editNote(editedNoteTitle, editedNoteDescription);
+		//VERIFY IS DISPLAYED
+		assertEquals(editedNoteTitle, notePage.getTitleOnNotePage());
+		assertEquals(editedNoteDescription, notePage.getDescriptionOnNotePage());
+	}
+
+	@Test
+	public void _2c_testDeleteNoteAndVerifyNoteNotDisplayed(){
+		//LOGIN AND ADD NOTE FIRST
+		userLoginForTest();
+		notePage.addNote(testNoteTitle, testNoteDescription);
+		//DELETE NOTE
+		notePage.deleteNote();
+		//VERIFY IS NOT DISPLAYED
+		assertNotEquals(testNoteTitle, notePage.getTitleOnNotePage());
+		assertNotEquals(testNoteDescription, notePage.getDescriptionOnNotePage());
+		//will this throw exception?
+		// or could check count of notes == 0
+	}
+
+	@Test
+	public void _3a_testAddCredentialsVerifyDisplayedAndPasswordEncrypted(){
+		
+	}
+
+	//******** methods to support @Test methods *************************
+	public User addUser(){
+		byte[] array = new byte[8];
+		new Random().nextBytes(array);
+		String username = new String(array, Charset.forName("UTF-8"));
+		String password = new String(array, Charset.forName("UTF-8"));
+		User user = new User();
+		user.setUserId(1);
+		user.setFirstName(testFirstName);
+		user.setLastName(testLastName);
+		user.setUsername(username);
+		user.setPassword(password);
+		userService.createUser(user);
+		return user;
+	}
+
+	public void userLoginForTest(User... users){
+		User user;
+		if(users.length==0){
+			user = addUser();
+		} else{
+			user = users[0];
+		}
+		driver.get("http://localhost:" + this.port + "/login");
+		loginPage.userEnterDetailsAndLogin(user.getUsername(), user.getPassword());
 	}
 
 
