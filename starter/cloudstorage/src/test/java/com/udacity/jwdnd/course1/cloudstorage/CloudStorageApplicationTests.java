@@ -80,13 +80,16 @@ class CloudStorageApplicationTests {
 	//***************  My Tests start from here  **********************
 	@Test
 	public void _1a_testVerifyUnauthorisedUserOnlyAccessLoginAndSignUp(){
-		driver.get("http://localhost" + this.port + "/login");
+		driver.get("http://localhost:" + this.port + "/login");
+		threadSleepSeconds(2);
 		assertEquals("Login", driver.getTitle());
 
-		driver.get("http://localhost" + this.port + "/signup");
+		driver.get("http://localhost:" + this.port + "/signup");
+		threadSleepSeconds(2);
 		assertEquals("Sign Up", driver.getTitle());
 
-		driver.get("http://localhost" + this.port + "/home");
+		driver.get("http://localhost:" + this.port + "/home");
+		threadSleepSeconds(2);
 		assertNotEquals("Home", driver.getTitle());
 	}
 
@@ -112,7 +115,8 @@ class CloudStorageApplicationTests {
 		assertEquals("Login", driver.getTitle()); //check goes to Login page when press Log Out
 
 		//VERIFY HOME PAGE NO LONGER ACCESSIBLE
-		driver.get("http://localhost" + this.port + "/home");
+		driver.get("http://localhost:" + this.port + "/home");
+		threadSleepSeconds(2);
 		assertNotEquals("Home", driver.getTitle());
 	}
 
@@ -181,6 +185,15 @@ class CloudStorageApplicationTests {
 		driver.get("http://localhost:" + this.port + "/login");
 		loginPage.userEnterDetailsAndLogin(user.getUsername(), user.getPassword());
 	}
+
+	//InterruptedException must be caught or declared
+	public void threadSleepSeconds(int seconds){
+		try{
+			Thread.sleep(seconds * 1000);
+		} catch(InterruptedException ie){
+		}
+	}
+
 
 
 

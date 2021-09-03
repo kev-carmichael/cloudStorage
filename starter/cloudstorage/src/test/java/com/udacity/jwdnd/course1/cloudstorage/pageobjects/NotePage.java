@@ -69,14 +69,6 @@ public class NotePage {
         webDriverWait.until(ExpectedConditions.invisibilityOf(element));
     }
 
-    //InterruptedException must be caught or declared
-    public void threadSleepSeconds(int seconds){
-        try{
-            Thread.sleep(seconds * 1000);
-        } catch(InterruptedException ie){
-            }
-    }
-
     public String getElementText(By element){
         return driver.findElement(element).getText();
     }
@@ -91,6 +83,14 @@ public class NotePage {
         waitUntilElementClickable(element);
         element.clear();
         element.sendKeys(text);
+    }
+
+    //InterruptedException must be caught or declared
+    public void threadSleepSeconds(int seconds){
+        try{
+            Thread.sleep(seconds * 1000);
+        } catch(InterruptedException ie){
+        }
     }
     //**************************************************************************************
 

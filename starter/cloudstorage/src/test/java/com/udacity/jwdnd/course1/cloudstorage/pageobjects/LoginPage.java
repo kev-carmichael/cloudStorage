@@ -61,6 +61,14 @@ public class LoginPage {
         waitUntilElementClickable(element);
         element.click();
     }
+
+    //InterruptedException must be caught or declared
+    public void threadSleepSeconds(int seconds){
+        try{
+            Thread.sleep(seconds * 1000);
+        } catch(InterruptedException ie){
+        }
+    }
     //**************************************************************************************
 
     public void waitUntilLoginPageVisible(){
@@ -68,6 +76,7 @@ public class LoginPage {
         waitUntilElementVisible(inputPassword);
         waitUntilElementClickable(submitButton);
         waitUntilElementClickable(signupLink);
+        threadSleepSeconds(2);
     }
 
     public void userEnterDetailsAndLogin(String username, String password){
