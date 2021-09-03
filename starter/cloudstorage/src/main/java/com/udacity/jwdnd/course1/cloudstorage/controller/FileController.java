@@ -1,5 +1,8 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.File;
+import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
+import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -12,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.InputStream;
 
 @RequestMapping("/file")
@@ -31,7 +33,7 @@ public class FileController {
         File file = fileService.viewFileFromId(fileId);
         InputStream inputStream = new ByteArrayInputStream(file.getFileData());
         InputStreamResource inputStreamResource = new InputStreamResource(inputStream);
-        return ResponseEntity.ok().headers(HttpHeaders.CONTENT_DISPOSITION, "fileName="*file.getFileName()).
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "fileName="+file.getFileName()).
                 contentType(MediaType.parseMediaType(file.getContentType())).body(inputStreamResource);
     }
 

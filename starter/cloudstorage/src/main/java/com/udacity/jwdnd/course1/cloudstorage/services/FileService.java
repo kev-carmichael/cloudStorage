@@ -1,9 +1,12 @@
 package com.udacity.jwdnd.course1.cloudstorage.services;
 
 
+import com.udacity.jwdnd.course1.cloudstorage.mapper.FileMapper;
+import com.udacity.jwdnd.course1.cloudstorage.model.File;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,9 +23,8 @@ public class FileService {
                         (null,
                         multipartFile.getOriginalFilename(),
                         multipartFile.getContentType(),
-                        Long.toString(multipartFile.getSize(),
-                        multipartFile.getBytes(),
-                        userId)));
+                        Long.toString(multipartFile.getSize()),
+                        userId, multipartFile.getBytes()));
     }
 
     public File viewFileFromId(int fileId){
@@ -38,7 +40,7 @@ public class FileService {
         return(file.isEmpty());
     }
 
-    public List<File>getFilesFromUserId(int userId){
+    public List<File> getFilesFromUserId(int userId){
         return fileMapper.getFilesFromUserId(userId);
     }
 

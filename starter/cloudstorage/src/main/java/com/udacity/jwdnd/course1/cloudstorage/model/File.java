@@ -2,7 +2,7 @@ package com.udacity.jwdnd.course1.cloudstorage.model;
 
 public class File {
 
-    private int fileId; //should this be an Integer?
+    private Integer fileId; //changed from int to Integer to enable null value in methods
     private String fileName;
     private String contentType;
     private String fileSize;
@@ -12,7 +12,7 @@ public class File {
     public File() {
     }
 
-    public File(int fileId, String fileName, String contentType, String fileSize, int userId, byte[] fileData) {
+    public File(Integer fileId, String fileName, String contentType, String fileSize, int userId, byte[] fileData) {
         this.fileId = fileId;
         this.fileName = fileName;
         this.contentType = contentType;

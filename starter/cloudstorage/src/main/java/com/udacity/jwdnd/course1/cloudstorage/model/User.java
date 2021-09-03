@@ -1,9 +1,8 @@
 package com.udacity.jwdnd.course1.cloudstorage.model;
 
 
-@Model
 public class User {
-    private int userId;  //should this be an Integer?
+    private Integer userId;  //changed from int to Integer to enable null value in UserService#insert
     private String username;
     private String salt;
     private String password;
@@ -13,7 +12,7 @@ public class User {
     public User() {
     }
 
-    public User(int userId, String username, String salt, String password, String firstName, String lastName) {
+    public User(Integer userId, String username, String salt, String password, String firstName, String lastName) {
         this.userId = userId;
         this.username = username;
         this.salt = salt;

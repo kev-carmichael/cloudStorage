@@ -1,5 +1,8 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
+import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
+import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +24,6 @@ public class CredentialController {
     @PostMapping("/addcredential")
     public String addOrEditCredential(@ModelAttribute Credential credential, Model model, Authentication authentication) {
         // make sure link correct attribute names, spelling & syntax with HTML pages
-        // and with Service class and mapper methods yet to be written ...
         int userFromId = userService.getUserFromId(authentication.getName());
         //.ofNullable() used to get instance of Optional (noteId)
         //returns empty if null, not NPE
@@ -32,7 +34,7 @@ public class CredentialController {
     }
 
     private String addCredential(Credential credential, Model model, int userFromId){
-        if(credentialService.isOnlyCredential(userFromId, credential.getUsername())){
+        if(credentialService.isOnlyUsername(userFromId, credential.getUsername())){
             credential.setUserId(userFromId);
             return displayResult(model, credentialService.addCredential(credential));
         } else{
@@ -41,7 +43,7 @@ public class CredentialController {
     }
 
     private String editCredential(Credential credential, Model model, int userFromId){
-        if(credentialService.isOnlyCredential(userFromId, credential.getUsername())){
+        if(credentialService.isOnlyUsername(userFromId, credential.getUsername())){
         return displayResult(model, credentialService.editCredential(credential));
         } else{
             return displayOtherErrorMsg( "User already exists", model);

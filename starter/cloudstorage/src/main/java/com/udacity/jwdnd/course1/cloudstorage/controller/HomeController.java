@@ -1,11 +1,15 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
 //make sure imported correct annotations
-import com.udacity.jwdnd.course1.cloudstorage.services.AuthenticationService;
-import com.udacity.jwdnd.course1.cloudstorage.services.EncryptionService;
+import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
+import com.udacity.jwdnd.course1.cloudstorage.model.File;
+import com.udacity.jwdnd.course1.cloudstorage.model.Note;
+import com.udacity.jwdnd.course1.cloudstorage.model.User;
+import com.udacity.jwdnd.course1.cloudstorage.services.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,7 +65,7 @@ public class HomeController {
         int userFromId = userService.getUserFromId(authentication.getName());
         notes = noteService.getNotesFromUserId(userFromId);
         files = fileService.getFilesFromUserId(userFromId);
-        credentials = credentialService.getCredentialsFromUserId(userFromId);
+        credentials = credentialService.getCredentialFromUserId(userFromId);
         decryptedPasswords = credentialService.getDecryptedPasswordsFromUserId(userFromId);
 
         model.addAttribute("credential", new Credential());

@@ -1,5 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.services;
 
+import com.udacity.jwdnd.course1.cloudstorage.mapper.CredentialMapper;
+import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
@@ -17,7 +19,9 @@ public class CredentialService {
         this.encryptionService = encryptionService;
     }
 
-    public List<Credential>credentialFromUserId(int userId);
+    public List<Credential>getCredentialFromUserId(int userId){
+        return credentialMapper.getFromUserId(userId);
+    }
 
     public int addCredential(Credential credential){
         SecureRandom random = new SecureRandom();
@@ -30,7 +34,7 @@ public class CredentialService {
         return credentialMapper.addCredential(credential);
     }
 
-    public String editCredential(Credential credential){
+    public int editCredential(Credential credential){
         SecureRandom random = new SecureRandom();
         byte[] key = new byte[16];
         random.nextBytes(key);
@@ -41,12 +45,12 @@ public class CredentialService {
         return credentialMapper.editCredential(credential);
     }
 
-    public String deleteCredential(int credentialId){
+    public int deleteCredential(int credentialId){
         return credentialMapper.deleteCredential(credentialId);
     }
 
     public List<String> getDecryptedPasswordsFromUserId(int userFromId){
-        List<Credential>listOfCredentials = credentailFromUserId((userFromId));
+        List<Credential>listOfCredentials = getCredentialFromUserId((userFromId));
         if(listOfCredentials!=null){
             return listOfCredentials.stream().filter(Objects::nonNull)
                     .map(credential -> encryptionService.decryptValue(credential.getPassword(), credential.getKey()))
@@ -65,6 +69,5 @@ public class CredentialService {
     public List<Credential> getFromUserId(int userId) {
         return credentialMapper.getFromUserId(userId);
     }
-
 
 }

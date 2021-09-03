@@ -1,8 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.model;
 
 public class Note {
-
-    private int noteId; //Integer?
+    private Integer noteId; //changed from int to Integer to enable null value in methods
     private String noteTitle;
     private String noteDescription;
     private int userId;
@@ -10,7 +9,7 @@ public class Note {
     public Note() {
     }
 
-    public Note(int noteId, String noteTitle, String noteDescription, int userId) {
+    public Note(Integer noteId, String noteTitle, String noteDescription, int userId) {
         this.noteId = noteId;
         this.noteTitle = noteTitle;
         this.noteDescription = noteDescription;

@@ -34,7 +34,7 @@ class CloudStorageApplicationTests {
 	private SignupPage signupPage;
 	private HomePage homePage;
 	private NotePage notePage;
-	private CredentialPage credentialPage;
+	//private CredentialPage credentialPage;
 	private static final String testFirstName = "TestFirstName";
 	private static final String testLastName = "TestLastName";
 	private static final String testUsername = "TestUsername";
@@ -61,7 +61,7 @@ class CloudStorageApplicationTests {
 		signupPage = new SignupPage(driver);
 		homePage = new HomePage(driver);
 		notePage = new NotePage(driver);
-		credentialPage = new CredentialPage(driver);
+		//credentialPage = new CredentialPage(driver);
 	}
 
 	@AfterEach
