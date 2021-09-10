@@ -29,7 +29,8 @@ class CloudStorageApplicationTests {
 	UserService userService;
 	NoteService noteService;
 
-	private static WebDriver driver; //made static, as per lessons code
+	//WebDriver was made static in lessons code, changed here
+	private WebDriver driver;
 	private LoginPage loginPage;
 	private SignupPage signupPage;
 	private HomePage homePage;
@@ -97,16 +98,17 @@ class CloudStorageApplicationTests {
 	public void _1b_testUserSignupLoginAccessHomePageLogOutAndVerifyHomePageNotAccessible(){
 		//USER SIGN UP
 		driver.get("http://localhost:" + this.port + "/signup");
-		signupPage.waitUntilSignupPageVisible();
+		//signupPage.waitUntilSignupPageVisible();
 		signupPage.userEnterDetailsAndSignup(testFirstName, testLastName,
 											testUsername, testPassword);
 		assertTrue(signupPage.successMsgVisible());
 
 		//USER LOG IN & HOME PAGE ACCESSIBLE
 		driver.get("http://localhost:" + this.port + "/login");
-		loginPage.waitUntilLoginPageVisible();
+		//loginPage.waitUntilLoginPageVisible();
 		loginPage.userEnterDetailsAndLogin(testUsername, testPassword);
 		//check if stored username and password?
+		homePage.waitUntilHomePageVisible();
 		assertEquals("Home", driver.getTitle());
 
 		//USER LOG OUT
@@ -116,7 +118,7 @@ class CloudStorageApplicationTests {
 
 		//VERIFY HOME PAGE NO LONGER ACCESSIBLE
 		driver.get("http://localhost:" + this.port + "/home");
-		threadSleepSeconds(2);
+		threadSleepSeconds(1);
 		assertNotEquals("Home", driver.getTitle());
 	}
 

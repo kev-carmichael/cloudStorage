@@ -47,7 +47,8 @@ public class SignupPage {
     private WebElement errorMsg; */
 
     public SignupPage(WebDriver driver){
-        PageFactory.initElements(driver, this);
+        //PageFactory.initElements(driver, this);
+        this.driver = driver;
     }
 
     /*public void waitUntilElementVisible(WebElement element){
@@ -91,7 +92,7 @@ public class SignupPage {
     }
 
     public void inputElementText(By element, String text){
-        waitUntilElementInvisible(element);
+        waitUntilElementVisible(element);
         waitUntilElementClickable(element);
         driver.findElement(element).clear();
         driver.findElement(element).sendKeys(text);
@@ -112,6 +113,7 @@ public class SignupPage {
     //**************************************************************************************
 
     public void waitUntilSignupPageVisible(){
+        threadSleepSeconds(2);
         waitUntilElementVisible(inputFirstName);
         waitUntilElementVisible(inputLastName);
         waitUntilElementVisible(inputUsername);
@@ -122,7 +124,7 @@ public class SignupPage {
 
     public void userEnterDetailsAndSignup(String firstName, String lastName,
                                           String username, String password){
-        waitUntilSignupPageVisible();
+        //waitUntilSignupPageVisible();
         inputElementText(inputFirstName, firstName);
         inputElementText(inputLastName, lastName);
         inputElementText(inputUsername, username);

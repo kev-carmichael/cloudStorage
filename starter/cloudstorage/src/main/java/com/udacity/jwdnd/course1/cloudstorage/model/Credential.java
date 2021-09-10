@@ -12,7 +12,7 @@ public class Credential {
     public Credential() {
     }
 
-    public Credential(int credentialId, String url, String username, String key, String password, int userId) {
+    public Credential(int credentialId, String credentialUrl, String username, String key, String password, int userId) {
         this.credentialId = credentialId;
         this.url = url;
         this.username = username;
