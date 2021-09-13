@@ -12,7 +12,7 @@ public class NotePage {
 
     public WebDriver driver;
 
-    @FindBy(id = "nav-notes-tab")
+    /* @FindBy(id = "nav-notes-tab")
     private WebElement navNotesTab;
 
     @FindBy(id = "logoutButton")
@@ -25,13 +25,26 @@ public class NotePage {
     private WebElement editNoteButton;
 
     @FindBy(id = "deleteNoteButton")
-    private WebElement deleteNoteButton;
+    private WebElement deleteNoteButton; */
+
+    private final By navNotesTab = By.id("nav-notes-tab");
+    private final By logoutButton = By.id("logoutButton");
+    private final By addANewNoteButton = By.id("addANewNoteButton");
+    private final By editNoteButton = By.id("editNoteButton");
+    private final By deleteNoteButton = By.id("deleteNoteButton");
 
     private final By mainNoteTitle = By.cssSelector("#notesTable tbody tr td:nth-of-type(2)"); //main note page title text
 
     private final By mainNoteDescription = By.cssSelector("#notesTable tbody tr td:nth-of-type(3)"); //main note page description text
 
-    @FindBy(id = "noteModalLabel") //modal heading
+    private final By noteModalLabel = By.id("noteModalLabel"); //modal heading
+    private final By noteTitle = By.id("note-title"); //modal note title text
+    private final By noteDescription = By.id("note-description"); //modal note description text
+    private final By closeButton = By.id("closeButton");
+    private final By saveChangesButton = By.id("saveChangesButton");
+    private final By saveSuccessMsg = By.id("saveSuccessMsg");
+
+    /* @FindBy(id = "noteModalLabel") //modal heading
     private WebElement noteModalLabel;
 
     @FindBy(id = "note-title") //modal note title text
@@ -47,42 +60,39 @@ public class NotePage {
     private WebElement saveChangesButton;
 
     @FindBy(id = "saveSuccessMsg")
-    private WebElement saveSuccessMsg;
+    private WebElement saveSuccessMsg; */
 
     public NotePage(WebDriver driver){
-        PageFactory.initElements(driver, this);
+        //PageFactory.initElements(driver, this);
+        this.driver = driver;
     }
 
     //****************used in other test classes - make into abstract methods?***************
-    public void waitUntilElementClickable(WebElement element){
+    public void waitUntilElementVisible(By element){
+        WebDriverWait webDriverWait = new WebDriverWait(driver, 10);
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(element));
+    }
+
+    public void waitUntilElementInvisible(By element){
+        WebDriverWait webDriverWait = new WebDriverWait(driver, 10);
+        webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(element));
+    }
+
+    public void waitUntilElementClickable(By element){
         WebDriverWait webDriverWait = new WebDriverWait(driver, 10);
         webDriverWait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    public void waitUntilElementVisible(WebElement element){
-        WebDriverWait webDriverWait = new WebDriverWait(driver, 10);
-        webDriverWait.until(ExpectedConditions.visibilityOf(element));
-    }
-
-    public void waitUntilElementInvisible(WebElement element){
-        WebDriverWait webDriverWait = new WebDriverWait(driver, 10);
-        webDriverWait.until(ExpectedConditions.invisibilityOf(element));
-    }
-
-    public String getElementText(By element){
-        return driver.findElement(element).getText();
-    }
-
-    public void clickElement(WebElement element){
+    public void inputElementText(By element, String text){
+        waitUntilElementVisible(element);
         waitUntilElementClickable(element);
-        element.click();
+        driver.findElement(element).clear();
+        driver.findElement(element).sendKeys(text);
     }
 
-    public void inputElementText(WebElement element, String text){
-        waitUntilElementInvisible(element);
+    public void clickElement(By element){
         waitUntilElementClickable(element);
-        element.clear();
-        element.sendKeys(text);
+        driver.findElement(element).click();
     }
 
     //InterruptedException must be caught or declared
@@ -93,6 +103,10 @@ public class NotePage {
         }
     }
     //**************************************************************************************
+
+    public String getElementText(By element){
+        return driver.findElement(element).getText();
+    }
 
     public void addNote(String title, String description){
         gotoNotesTab(); //GO TO NOTES TAB
