@@ -3,6 +3,7 @@ package com.udacity.jwdnd.course1.cloudstorage.controller;
 import com.udacity.jwdnd.course1.cloudstorage.model.File;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 @RequestMapping("/file")
@@ -23,6 +25,7 @@ public class FileController {
     private final UserService userService;
     private final FileService fileService;
 
+    @Autowired
     public FileController(UserService userService, FileService fileService) {
         this.userService = userService;
         this.fileService = fileService;
@@ -37,6 +40,7 @@ public class FileController {
                 contentType(MediaType.parseMediaType(file.getContentType())).body(inputStreamResource);
     }
 
+
     @GetMapping("/deletefile/{fileId:.+}")
     public String deleteFile(@PathVariable Integer fileId, Model model){
         return displayResult(model, fileService.deleteFile(fileId));
@@ -44,7 +48,7 @@ public class FileController {
 
     @PostMapping("/uploadfile")
     public String uploadFile(@RequestParam("fileUpload")MultipartFile multipartFile,
-                             Authentication authentication, Model model) throws Exception{
+                             Authentication authentication, Model model) throws IOException{
         int userId = userService.getUserFromId(authentication.getName());
         if(!multipartFile.isEmpty()){
             if(fileService.isOnlyFileName(userId, multipartFile.getOriginalFilename())){
@@ -58,18 +62,16 @@ public class FileController {
     }
 
     private String displayResult(Model model, int entry){
-        String resultMsg = null;
         if(entry==1){
-            resultMsg.equals("successMsg");
+            model.addAttribute("successMsg");
         } else{
-            resultMsg.equals("notSavedErrorMsg");
+            model.addAttribute("notSavedErrorMsg");
         }
-        model.addAttribute(resultMsg, model);
         return "result";
     }
 
     private String displayFileErrorMsg(String msg, Model model){
-        model.addAttribute("fileErrorMsg", msg);
+        model.addAttribute("fileErrorMsg", model);
         return "result";
     }
 

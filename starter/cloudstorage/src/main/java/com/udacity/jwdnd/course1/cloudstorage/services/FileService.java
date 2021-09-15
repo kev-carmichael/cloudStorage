@@ -3,9 +3,11 @@ package com.udacity.jwdnd.course1.cloudstorage.services;
 
 import com.udacity.jwdnd.course1.cloudstorage.mapper.FileMapper;
 import com.udacity.jwdnd.course1.cloudstorage.model.File;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,11 +16,12 @@ public class FileService {
 
     private final FileMapper fileMapper;
 
+    @Autowired
     public FileService(FileMapper fileMapper) {
         this.fileMapper = fileMapper;
     }
 
-    public int uploadFile(MultipartFile multipartFile, int userId) throws Exception{
+    public int uploadFile(MultipartFile multipartFile, int userId) throws IOException{
         return fileMapper.uploadFile(new File
                         (null,
                         multipartFile.getOriginalFilename(),

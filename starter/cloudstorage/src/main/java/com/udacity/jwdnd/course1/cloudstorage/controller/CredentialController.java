@@ -3,6 +3,7 @@ package com.udacity.jwdnd.course1.cloudstorage.controller;
 import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ public class CredentialController {
     private final UserService userService;
     private final CredentialService credentialService;
 
+    @Autowired
     public CredentialController(UserService userService, CredentialService credentialService) {
         this.userService = userService;
         this.credentialService = credentialService;
@@ -51,7 +53,7 @@ public class CredentialController {
     }
 
     private String displayOtherErrorMsg(String msg, Model model){
-        model.addAttribute("otherErrorMsg", msg);
+        model.addAttribute("otherErrorMsg", model);
         return "result";
     }
 
@@ -61,13 +63,11 @@ public class CredentialController {
     }
 
     private String displayResult(Model model, int entry){
-        String resultMsg = null;
         if(entry==1){
-            resultMsg.equals("successMsg");
+            model.addAttribute("successMsg");
         } else{
-            resultMsg.equals("notSavedErrorMsg");
+            model.addAttribute("notSavedErrorMsg");
         }
-        model.addAttribute(resultMsg, model);
         return "result";
     }
 }
