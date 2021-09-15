@@ -24,7 +24,7 @@ public class UserService {
         return userMapper.getUser(username)==null;
     }
 
-    public Integer createUser(User user){
+    public int createUser(User user){
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
         random.nextBytes(salt);
@@ -37,7 +37,7 @@ public class UserService {
         return userMapper.getUser(username);
     }
 
-    public Integer getUserFromId(String username){
+    public int getUserFromId(String username){
         return userMapper.getUserFromId(username);
     }
 

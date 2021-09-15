@@ -25,7 +25,7 @@ public class NoteController {
     public String addOrEditNote(@ModelAttribute Note note, Model model, Authentication authentication) {
         // make sure link correct attribute names, spelling & syntax with HTML pages
         // and with Service class methods yet to be written ...
-        Integer userFromId = userService.getUserFromId(authentication.getName());
+        int userFromId = userService.getUserFromId(authentication.getName());
         //.ofNullable() used to get instance of Optional (noteId)
         //returns empty if null, not NPE
         //THEREFORE noteId must be an INteger, not int
@@ -35,7 +35,7 @@ public class NoteController {
         } else return editNote(note, model, userFromId);
     }
 
-    private String addNote(Note note, Model model, Integer userFromId){
+    private String addNote(Note note, Model model, int userFromId){
         if(noteService.isOnlyNote(userFromId, note.getNoteTitle(), note.getNoteDescription())){
             return displayResult(model, noteService.addNote(note, userFromId));
         } else{
@@ -43,7 +43,7 @@ public class NoteController {
         }
     }
 
-    private String editNote(Note note, Model model, Integer userFromId){
+    private String editNote(Note note, Model model, int userFromId){
         if(noteService.isOnlyNote(userFromId, note.getNoteTitle(), note.getNoteDescription())){
             return displayResult(model, noteService.editNote(note));
         } else{

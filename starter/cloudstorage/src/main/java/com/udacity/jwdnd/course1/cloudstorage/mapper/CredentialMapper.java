@@ -11,19 +11,19 @@ public interface CredentialMapper {
     @Insert("INSERT INTO CREDENTIALS (credentialId, url, username, key, password, userId)" +
             ("VALUES(#{credentialId}, #{url}, #{username}, #{key}, #{password}, #{userId})"))
     @Options(useGeneratedKeys = true, keyProperty = "credentialId")
-    Integer addCredential(Credential credential);
+    int addCredential(Credential credential);
 
     @Update("UPDATE CREDENTIALS SET url=#{url}, username=#{username}, " +
             "key=#{key}, password=#{password} WHERE credentialId = #{credentialId}")
-    Integer editCredential(Credential credential);
+    int editCredential(Credential credential);
 
     @Delete("DELETE FROM CREDENTIALS WHERE credentialId = #{credentialId}")
-    Integer deleteCredential(Integer credentialId);
+    int deleteCredential(Integer credentialId);
 
     @Select("SELECT * FROM CREDENTIALS WHERE userId=#{userId} AND username=#{username}")
     Credential isOnlyUsername(Integer userId, String username);
 
     @Select("SELECT * FROM CREDENTIALS WHERE userId=#{userId}")
-    List<Credential> getFromUserId(Integer userId);
+    List<Credential> getFromUserId(int userId);
 
 }

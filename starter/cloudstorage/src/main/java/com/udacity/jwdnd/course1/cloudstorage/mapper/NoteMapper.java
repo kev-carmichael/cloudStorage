@@ -11,14 +11,14 @@ public interface NoteMapper {
     @Insert("INSERT INTO NOTES (noteTitle, noteDescription, userId)" +
             "VALUES(#{noteTitle}, #{noteDescription},  #{userId})")
     @Options(useGeneratedKeys = true, keyProperty = "noteId")
-    Integer addNote(Note note); //return value changed from int to Integer
+    int addNote(Note note); //return value changed from int to Integer
 
     //given a Note can we call on one of its parameters, like noteId?
     @Update("UPDATE NOTES SET noteTitle=#{noteTitle}, noteDescription=#{noteDescription} WHERE noteId = #{noteId}")
-    Integer editNote(Note note); //return value changed from int to Integer
+    int editNote(Note note); //return value changed from int to Integer
 
     @Delete("DELETE FROM NOTES WHERE noteId = #{noteId}")
-    Integer deleteNote(Integer noteId); //return value changed from int to Integer
+    int deleteNote(Integer noteId); //return value changed from int to Integer
 
     @Select("SELECT * FROM NOTES WHERE userId=#{userId} AND noteTitle=#{noteTitle} AND noteDescription=#{noteDescription}")
     Note isOnlyNote(Integer userId, String noteTitle, String noteDescription);

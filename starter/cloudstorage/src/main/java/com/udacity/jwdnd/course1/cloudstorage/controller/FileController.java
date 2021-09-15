@@ -29,7 +29,7 @@ public class FileController {
     }
 
     @GetMapping("/viewfile/{fileId:.+}")
-    public ResponseEntity<Resource>viewFile(@PathVariable Integer fileId){
+    public ResponseEntity<Resource>viewFile(@PathVariable int fileId){
         File file = fileService.viewFileFromId(fileId);
         InputStream inputStream = new ByteArrayInputStream(file.getFileData());
         InputStreamResource inputStreamResource = new InputStreamResource(inputStream);
@@ -45,7 +45,7 @@ public class FileController {
     @PostMapping("/uploadfile")
     public String uploadFile(@RequestParam("fileUpload")MultipartFile multipartFile,
                              Authentication authentication, Model model) throws Exception{
-        Integer userId = userService.getUserFromId(authentication.getName());
+        int userId = userService.getUserFromId(authentication.getName());
         if(!multipartFile.isEmpty()){
             if(fileService.isOnlyFileName(userId, multipartFile.getOriginalFilename())){
                 return displayResult(model, fileService.uploadFile(multipartFile, userId));

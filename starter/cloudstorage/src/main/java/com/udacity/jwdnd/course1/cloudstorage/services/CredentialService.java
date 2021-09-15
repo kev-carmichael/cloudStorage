@@ -23,7 +23,7 @@ public class CredentialService {
         return credentialMapper.getFromUserId(userId);
     }
 
-    public Integer addCredential(Credential credential){
+    public int addCredential(Credential credential){
         SecureRandom random = new SecureRandom();
         byte[] key = new byte[16];
         random.nextBytes(key);
@@ -34,7 +34,7 @@ public class CredentialService {
         return credentialMapper.addCredential(credential);
     }
 
-    public Integer editCredential(Credential credential){
+    public int editCredential(Credential credential){
         SecureRandom random = new SecureRandom();
         byte[] key = new byte[16];
         random.nextBytes(key);
@@ -45,7 +45,7 @@ public class CredentialService {
         return credentialMapper.editCredential(credential);
     }
 
-    public Integer deleteCredential(Integer credentialId){
+    public int deleteCredential(int credentialId){
         return credentialMapper.deleteCredential(credentialId);
     }
 

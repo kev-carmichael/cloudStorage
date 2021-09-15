@@ -18,7 +18,7 @@ public class FileService {
         this.fileMapper = fileMapper;
     }
 
-    public Integer uploadFile(MultipartFile multipartFile, Integer userId) throws Exception{
+    public int uploadFile(MultipartFile multipartFile, int userId) throws Exception{
         return fileMapper.uploadFile(new File
                         (null,
                         multipartFile.getOriginalFilename(),
@@ -27,11 +27,11 @@ public class FileService {
                         userId, multipartFile.getBytes()));
     }
 
-    public File viewFileFromId(Integer fileId){
+    public File viewFileFromId(int fileId){
         return fileMapper.viewFileFromId(fileId);
     }
 
-    public Integer deleteFile(Integer fileId){
+    public int deleteFile(int fileId){
         return fileMapper.deleteFile(fileId);
     }
 
@@ -40,7 +40,7 @@ public class FileService {
         return(file.isEmpty());
     }
 
-    public List<File> getFilesFromUserId(Integer userId){
+    public List<File> getFilesFromUserId(int userId){
         return fileMapper.getFilesFromUserId(userId);
     }
 

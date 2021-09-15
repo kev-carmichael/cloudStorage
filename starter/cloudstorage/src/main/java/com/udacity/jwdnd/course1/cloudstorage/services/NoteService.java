@@ -17,17 +17,17 @@ public class NoteService {
         this.noteMapper = noteMapper;
     }
 
-    public Integer addNote(Note note, Integer userId){
+    public int addNote(Note note, int userId){
         //changed instantiation to take Integer value of null, instead of int value of 0
         return noteMapper.addNote(new Note(null, note.getNoteTitle(),
                 note.getNoteDescription(), userId));
     }
 
-    public Integer editNote(Note note){
+    public int editNote(Note note){
         return noteMapper.editNote(note);
     }
 
-    public Integer deleteNote(Integer noteId){
+    public int deleteNote(Integer noteId){
         return noteMapper.deleteNote(noteId);
     }
 
