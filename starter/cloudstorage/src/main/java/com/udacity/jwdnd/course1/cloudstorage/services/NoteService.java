@@ -17,26 +17,27 @@ public class NoteService {
         this.noteMapper = noteMapper;
     }
 
-    public int addNote(Note note, int userId){
-        return noteMapper.addNote(new Note(0, note.getNoteTitle(),
+    public Integer addNote(Note note, Integer userId){
+        //changed instantiation to take Integer value of null, instead of int value of 0
+        return noteMapper.addNote(new Note(null, note.getNoteTitle(),
                 note.getNoteDescription(), userId));
     }
 
-    public int editNote(Note note){
+    public Integer editNote(Note note){
         return noteMapper.editNote(note);
     }
 
-    public int deleteNote(int noteId){
+    public Integer deleteNote(Integer noteId){
         return noteMapper.deleteNote(noteId);
     }
 
-    public boolean isOnlyNote(int userId, String noteTitle, String noteDescription){
+    public boolean isOnlyNote(Integer userId, String noteTitle, String noteDescription){
         Optional<Note>note =
                 Optional.ofNullable(noteMapper.isOnlyNote(userId, noteTitle, noteDescription));
         return (note.isEmpty());
     }
 
-    public List<Note> getNotesFromUserId(int userId){
+    public List<Note> getNotesFromUserId(Integer userId){
         return noteMapper.getNotesFromUserId(userId);
     }
 }

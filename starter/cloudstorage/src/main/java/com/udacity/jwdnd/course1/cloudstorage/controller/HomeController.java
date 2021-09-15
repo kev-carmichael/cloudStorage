@@ -26,25 +26,21 @@ public class HomeController {
     private final NoteService noteService;
     private final FileService fileService;
     private final CredentialService credentialService;
-    private final AuthenticationService authenticationService;
     private final EncryptionService encryptionService;
 
     public HomeController(UserService userService,
                           NoteService noteService,
                           FileService fileService,
                           CredentialService credentialService,
-                          AuthenticationService authenticationService,
                           EncryptionService encryptionService) {
         this.userService = userService;
         this.noteService = noteService;
         this.fileService = fileService;
         this.credentialService = credentialService;
-        this.authenticationService = authenticationService;
         this.encryptionService = encryptionService;
     }
 
     List<Note>notes;
-    List<User>users;
     List<File>files;
     List<Credential>credentials;
     List<String> decryptedPasswords;
@@ -52,7 +48,6 @@ public class HomeController {
     @PostConstruct
     public void postConstruct(){
         notes = new ArrayList<>();
-        users = new ArrayList<>();
         files = new ArrayList<>();
         credentials = new ArrayList<>();
         decryptedPasswords = new ArrayList<>();
@@ -62,7 +57,7 @@ public class HomeController {
     public String getHome(Model model, Authentication authentication){
         // make sure link correct attribute names, spelling & syntax with HTML pages
         // and with Service class methods yet to be written ...
-        int userFromId = userService.getUserFromId(authentication.getName());
+        Integer userFromId = userService.getUserFromId(authentication.getName());
         notes = noteService.getNotesFromUserId(userFromId);
         files = fileService.getFilesFromUserId(userFromId);
         credentials = credentialService.getCredentialFromUserId(userFromId);

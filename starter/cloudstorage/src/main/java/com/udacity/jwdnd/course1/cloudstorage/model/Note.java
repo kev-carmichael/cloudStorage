@@ -4,23 +4,23 @@ public class Note {
     private Integer noteId; //changed from int to Integer to enable null value in methods
     private String noteTitle;
     private String noteDescription;
-    private int userId;
+    private Integer userId; //changed from int to Integer to enable null value in methods
 
     public Note() {
     }
 
-    public Note(Integer noteId, String noteTitle, String noteDescription, int userId) {
+    public Note(Integer noteId, String noteTitle, String noteDescription, Integer userId) {
         this.noteId = noteId;
         this.noteTitle = noteTitle;
         this.noteDescription = noteDescription;
         this.userId = userId;
     }
 
-    public int getNoteId() {
+    public Integer getNoteId() {
         return noteId;
     }
 
-    public void setNoteId(int noteId) {
+    public void setNoteId(Integer noteId) {
         this.noteId = noteId;
     }
 
@@ -40,11 +40,11 @@ public class Note {
         this.noteDescription = noteDescription;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 }

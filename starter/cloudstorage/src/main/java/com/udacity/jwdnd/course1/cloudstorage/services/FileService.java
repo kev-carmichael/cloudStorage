@@ -18,7 +18,7 @@ public class FileService {
         this.fileMapper = fileMapper;
     }
 
-    public int uploadFile(MultipartFile multipartFile, int userId) throws Exception{
+    public Integer uploadFile(MultipartFile multipartFile, Integer userId) throws Exception{
         return fileMapper.uploadFile(new File
                         (null,
                         multipartFile.getOriginalFilename(),
@@ -27,20 +27,20 @@ public class FileService {
                         userId, multipartFile.getBytes()));
     }
 
-    public File viewFileFromId(int fileId){
+    public File viewFileFromId(Integer fileId){
         return fileMapper.viewFileFromId(fileId);
     }
 
-    public int deleteFile(int fileId){
+    public Integer deleteFile(Integer fileId){
         return fileMapper.deleteFile(fileId);
     }
 
-    public boolean isOnlyFileName(int userId, String fileName){
+    public boolean isOnlyFileName(Integer userId, String fileName){
         Optional<File>file = Optional.ofNullable(fileMapper.isOnlyFileName(userId,fileName));
         return(file.isEmpty());
     }
 
-    public List<File> getFilesFromUserId(int userId){
+    public List<File> getFilesFromUserId(Integer userId){
         return fileMapper.getFilesFromUserId(userId);
     }
 

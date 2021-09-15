@@ -24,7 +24,7 @@ public class CredentialController {
     @PostMapping("/addcredential")
     public String addOrEditCredential(@ModelAttribute Credential credential, Model model, Authentication authentication) {
         // make sure link correct attribute names, spelling & syntax with HTML pages
-        int userFromId = userService.getUserFromId(authentication.getName());
+        Integer userFromId = userService.getUserFromId(authentication.getName());
         //.ofNullable() used to get instance of Optional (noteId)
         //returns empty if null, not NPE
         Optional<Integer> credentialId = Optional.ofNullable(credential.getCredentialId());
@@ -33,7 +33,7 @@ public class CredentialController {
         } else return editCredential(credential, model, userFromId);
     }
 
-    private String addCredential(Credential credential, Model model, int userFromId){
+    private String addCredential(Credential credential, Model model, Integer userFromId){
         if(credentialService.isOnlyUsername(userFromId, credential.getUsername())){
             credential.setUserId(userFromId);
             return displayResult(model, credentialService.addCredential(credential));
@@ -42,7 +42,7 @@ public class CredentialController {
         }
     }
 
-    private String editCredential(Credential credential, Model model, int userFromId){
+    private String editCredential(Credential credential, Model model, Integer userFromId){
         if(credentialService.isOnlyUsername(userFromId, credential.getUsername())){
         return displayResult(model, credentialService.editCredential(credential));
         } else{
@@ -56,7 +56,7 @@ public class CredentialController {
     }
 
     @GetMapping("/deletecredential/{credentialId:.+}")
-    public String deleteCredential(@PathVariable int credentialId, Model model){
+    public String deleteCredential(@PathVariable Integer credentialId, Model model){
         return displayResult(model, credentialService.deleteCredential(credentialId));
     }
 

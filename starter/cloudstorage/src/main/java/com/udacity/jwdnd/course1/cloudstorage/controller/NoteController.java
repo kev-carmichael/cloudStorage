@@ -25,16 +25,17 @@ public class NoteController {
     public String addOrEditNote(@ModelAttribute Note note, Model model, Authentication authentication) {
         // make sure link correct attribute names, spelling & syntax with HTML pages
         // and with Service class methods yet to be written ...
-        int userFromId = userService.getUserFromId(authentication.getName());
+        Integer userFromId = userService.getUserFromId(authentication.getName());
         //.ofNullable() used to get instance of Optional (noteId)
         //returns empty if null, not NPE
+        //THEREFORE noteId must be an INteger, not int
         Optional<Integer> noteId = Optional.ofNullable(note.getNoteId());
         if (noteId.isEmpty()) {
             return addNote(note, model, userFromId);
         } else return editNote(note, model, userFromId);
     }
 
-    private String addNote(Note note, Model model, int userFromId){
+    private String addNote(Note note, Model model, Integer userFromId){
         if(noteService.isOnlyNote(userFromId, note.getNoteTitle(), note.getNoteDescription())){
             return displayResult(model, noteService.addNote(note, userFromId));
         } else{
@@ -42,7 +43,7 @@ public class NoteController {
         }
     }
 
-    private String editNote(Note note, Model model, int userFromId){
+    private String editNote(Note note, Model model, Integer userFromId){
         if(noteService.isOnlyNote(userFromId, note.getNoteTitle(), note.getNoteDescription())){
             return displayResult(model, noteService.editNote(note));
         } else{
@@ -56,7 +57,7 @@ public class NoteController {
     }
 
     @GetMapping("/deletenote/{noteId:.+}")
-    public String deleteNote(@PathVariable int noteId, Model model){
+    public String deleteNote(@PathVariable Integer noteId, Model model){
         return displayResult(model, noteService.deleteNote(noteId));
     }
 

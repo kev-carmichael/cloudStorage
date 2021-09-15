@@ -6,13 +6,13 @@ public class File {
     private String fileName;
     private String contentType;
     private String fileSize;
-    private int userId; //should this be an Integer?
+    private Integer userId;
     private byte[] fileData;
 
     public File() {
     }
 
-    public File(Integer fileId, String fileName, String contentType, String fileSize, int userId, byte[] fileData) {
+    public File(Integer fileId, String fileName, String contentType, String fileSize, Integer userId, byte[] fileData) {
         this.fileId = fileId;
         this.fileName = fileName;
         this.contentType = contentType;
@@ -21,11 +21,11 @@ public class File {
         this.fileData = fileData;
     }
 
-    public int getFileId() {
+    public Integer getFileId() {
         return fileId;
     }
 
-    public void setFileId(int fileId) {
+    public void setFileId(Integer fileId) {
         this.fileId = fileId;
     }
 
@@ -53,11 +53,11 @@ public class File {
         this.fileSize = fileSize;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 

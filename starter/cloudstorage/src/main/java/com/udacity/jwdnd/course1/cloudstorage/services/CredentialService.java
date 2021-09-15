@@ -19,11 +19,11 @@ public class CredentialService {
         this.encryptionService = encryptionService;
     }
 
-    public List<Credential>getCredentialFromUserId(int userId){
+    public List<Credential>getCredentialFromUserId(Integer userId){
         return credentialMapper.getFromUserId(userId);
     }
 
-    public int addCredential(Credential credential){
+    public Integer addCredential(Credential credential){
         SecureRandom random = new SecureRandom();
         byte[] key = new byte[16];
         random.nextBytes(key);
@@ -34,7 +34,7 @@ public class CredentialService {
         return credentialMapper.addCredential(credential);
     }
 
-    public int editCredential(Credential credential){
+    public Integer editCredential(Credential credential){
         SecureRandom random = new SecureRandom();
         byte[] key = new byte[16];
         random.nextBytes(key);
@@ -45,11 +45,11 @@ public class CredentialService {
         return credentialMapper.editCredential(credential);
     }
 
-    public int deleteCredential(int credentialId){
+    public Integer deleteCredential(Integer credentialId){
         return credentialMapper.deleteCredential(credentialId);
     }
 
-    public List<String> getDecryptedPasswordsFromUserId(int userFromId){
+    public List<String> getDecryptedPasswordsFromUserId(Integer userFromId){
         List<Credential>listOfCredentials = getCredentialFromUserId((userFromId));
         if(listOfCredentials!=null){
             return listOfCredentials.stream().filter(Objects::nonNull)
@@ -60,13 +60,13 @@ public class CredentialService {
         }
     }
 
-    public boolean isOnlyUsername(int userId, String username){
+    public boolean isOnlyUsername(Integer userId, String username){
         Optional<Credential> credential =
                 Optional.ofNullable(credentialMapper.isOnlyUsername(userId, username));
         return (credential.isEmpty());
     }
 
-    public List<Credential> getFromUserId(int userId) {
+    public List<Credential> getFromUserId(Integer userId) {
         return credentialMapper.getFromUserId(userId);
     }
 
