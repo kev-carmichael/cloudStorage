@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/error")
 public class ErrorMessageController implements ErrorController {
     //credit mentor Yuri
-    @GetMapping()
+    //@GetMapping()
     public String showError(HttpServletRequest request){
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         if (status != null) {
@@ -34,6 +34,6 @@ public class ErrorMessageController implements ErrorController {
 
     @Override
     public String getErrorPath() {
-        return null;
-    }
+        return "/error";
+    } //changed from "/error" to null
 }

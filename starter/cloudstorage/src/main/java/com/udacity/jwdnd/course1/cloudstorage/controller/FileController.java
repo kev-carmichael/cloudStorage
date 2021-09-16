@@ -71,7 +71,7 @@ public class FileController {
     }
 
     private String displayFileErrorMsg(String msg, Model model){
-        model.addAttribute("fileErrorMsg", model);
+        model.addAttribute("fileErrorMsg", msg);
         return "result";
     }
 
