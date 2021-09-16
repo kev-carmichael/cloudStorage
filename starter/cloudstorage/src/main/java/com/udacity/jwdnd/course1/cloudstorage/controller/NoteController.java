@@ -66,9 +66,9 @@ public class NoteController {
 
     private String displayResult(Model model, int entry){
         if(entry==1){
-            model.addAttribute("successMsg");
+            model.addAttribute("successMsg", true);
         } else{
-            model.addAttribute("notSavedErrorMsg");
+            model.addAttribute("notSavedErrorMsg", true);
         }
         return "result";
     }
