@@ -71,12 +71,12 @@ public class FileController {
     }
 
     private String displayFileErrorMsg(String msg, Model model){
-        model.addAttribute("fileErrorMsg", msg);
+        model.addAttribute("fileErrorMsg", true);
         return "result";
     }
 
     private String displayOtherErrorMsg(String msg, Model model){
-        model.addAttribute("otherErrorMsg", msg);
+        model.addAttribute("otherErrorMsg", true);
         return "result";
     }
 

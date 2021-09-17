@@ -53,7 +53,7 @@ public class CredentialController {
     }
 
     private String displayOtherErrorMsg(String msg, Model model){
-        model.addAttribute("otherErrorMsg", model);
+        model.addAttribute("otherErrorMsg", true);
         return "result";
     }
 
