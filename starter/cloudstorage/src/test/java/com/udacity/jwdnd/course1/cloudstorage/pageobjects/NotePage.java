@@ -35,6 +35,7 @@ public class NotePage {
 
     private final By mainNoteTitle = By.cssSelector("#notesTable tbody tr td:nth-of-type(2)"); //main note page title text
 
+
     private final By mainNoteDescription = By.cssSelector("#notesTable tbody tr td:nth-of-type(3)"); //main note page description text
 
     private final By noteModalLabel = By.id("noteModalLabel"); //modal heading
@@ -129,6 +130,7 @@ public class NotePage {
     public void clickToReturnToHomePage(){
         waitUntilElementVisible(saveSuccessMsg); //MSG SAVED GO TO HOME
         clickElement(saveSuccessMsg); // CLICK TO GO TO HOME
+        threadSleepSeconds(2);
         waitUntilElementInvisible(noteModalLabel); // WAIT TILL NOT IN NOTES TAB
         waitUntilElementClickable(logoutButton); //WAIT UNTIL LOGOUT BUTTON AVAIL - PROVE NOT IN NOTES TAB
         waitUntilElementClickable(navNotesTab); //WAIT UNTIL NOTES TAB BUTTON AVAIL - PROVE NOT IN NOTES TAB
@@ -151,6 +153,7 @@ public class NotePage {
     public void deleteNote(){
         clickElement(deleteNoteButton);
         waitUntilElementInvisible(addANewNoteButton);
+        threadSleepSeconds(2);
         clickToReturnToHomePage();
         gotoNotesTab();
         waitUntilElementClickable(addANewNoteButton); //VERIFY ON NOTES TAB

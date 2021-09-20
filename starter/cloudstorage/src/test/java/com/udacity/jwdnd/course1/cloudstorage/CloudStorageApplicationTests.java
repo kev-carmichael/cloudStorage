@@ -8,9 +8,12 @@ import com.udacity.jwdnd.course1.cloudstorage.pageobjects.SignupPage;
 import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
@@ -26,7 +29,9 @@ class CloudStorageApplicationTests {
 	@LocalServerPort
 	private int port;
 
+	@Autowired
 	UserService userService;
+	@Autowired
 	NoteService noteService;
 
 	//WebDriver was made static in lessons code, changed here
@@ -126,7 +131,9 @@ class CloudStorageApplicationTests {
 	public void _2a_testAddNoteAndVerifyDisplayed(){
 		userLoginForTest();
 		notePage.addNote(testNoteTitle, testNoteDescription);
+		threadSleepSeconds(2);
 		assertEquals(testNoteTitle, notePage.getTitleOnNotePage());
+		threadSleepSeconds(2);
 		assertEquals(testNoteDescription, notePage.getDescriptionOnNotePage());
 	}
 
@@ -143,17 +150,19 @@ class CloudStorageApplicationTests {
 	}
 
 	@Test
-	public void _2c_testDeleteNoteAndVerifyNoteNotDisplayed(){
-		//LOGIN AND ADD NOTE FIRST
-		userLoginForTest();
+	public void _2c_testDeleteNoteAndVerifyNoteNotDisplayed() {
+		User user = addUser();
+		userLoginForTest(user);
+		notePage.gotoNotesTab();
 		notePage.addNote(testNoteTitle, testNoteDescription);
-		//DELETE NOTE
+		notePage.logout();
+		userLoginForTest(user);
+		notePage.gotoNotesTab();
 		notePage.deleteNote();
-		//VERIFY IS NOT DISPLAYED
-		assertNotEquals(testNoteTitle, notePage.getTitleOnNotePage());
-		assertNotEquals(testNoteDescription, notePage.getDescriptionOnNotePage());
-		//will this throw exception?
-		// or could check count of notes == 0
+		threadSleepSeconds(2);
+		notePage.gotoNotesTab();
+		assertEquals(0, notePage.getCountOfNotes());
+		assertThrows(NoSuchElementException.class, () -> notePage.getTitleOnNotePage());
 	}
 
 	@Test
@@ -163,10 +172,12 @@ class CloudStorageApplicationTests {
 
 	//******** methods to support @Test methods *************************
 	public User addUser(){
-		byte[] array = new byte[8];
+		/*byte[] array = new byte[8];
 		new Random().nextBytes(array);
 		String username = new String(array, Charset.forName("UTF-8"));
-		String password = new String(array, Charset.forName("UTF-8"));
+		String password = new String(array, Charset.forName("UTF-8"));*/
+		String username = RandomStringUtils.random(4, true, false);
+		String password = RandomStringUtils.random(4, true, true);
 		User user = new User();
 		user.setUserId(1);
 		user.setFirstName(testFirstName);
@@ -174,6 +185,7 @@ class CloudStorageApplicationTests {
 		user.setUsername(username);
 		user.setPassword(password);
 		userService.createUser(user);
+		user.setPassword(password); // req#d again
 		return user;
 	}
 
