@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.pageobjects.HomePage;
 import com.udacity.jwdnd.course1.cloudstorage.pageobjects.LoginPage;
@@ -167,7 +168,6 @@ class CloudStorageApplicationTests {
 
 	@Test
 	public void _3a_testAddCredentialsVerifyDisplayedAndPasswordEncrypted(){
-		
 	}
 
 	//******** methods to support @Test methods *************************
