@@ -111,7 +111,7 @@ public class CredentialPage {
         return getElementText(credentialPassword);
     }
 
-    public int getCountOfNotes(){
+    public int getCountOfCredentials(){
         return driver.findElements(credentialUrl).size();
     }
 

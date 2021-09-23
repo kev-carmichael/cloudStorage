@@ -52,7 +52,6 @@ class CloudStorageApplicationTests {
 	private static final String testCredentialUrl = "https://www.selenium.dev";
 	private static final String editedTestCredentialUrl = "https://www.selenium.dev/selenium/docs/api/java/org/openqa/selenium/WebDriver.html";
 
-
 	@BeforeAll
 	static void beforeAll() {
 		WebDriverManager.chromedriver().setup();
@@ -87,11 +86,9 @@ class CloudStorageApplicationTests {
 		driver.get("http://localhost:" + this.port + "/login");
 		threadSleepSeconds(2);
 		assertEquals("Login", driver.getTitle());
-
 		driver.get("http://localhost:" + this.port + "/signup");
 		threadSleepSeconds(2);
 		assertEquals("Sign Up", driver.getTitle());
-
 		driver.get("http://localhost:" + this.port + "/home");
 		threadSleepSeconds(2);
 		assertNotEquals("Home", driver.getTitle());
@@ -105,7 +102,6 @@ class CloudStorageApplicationTests {
 		signupPage.userEnterDetailsAndSignup(testFirstName, testLastName,
 											testUsername, testPassword);
 		assertTrue(signupPage.successMsgVisible());
-
 		//USER LOG IN & HOME PAGE ACCESSIBLE
 		driver.get("http://localhost:" + this.port + "/login");
 		//loginPage.waitUntilLoginPageVisible();
@@ -113,12 +109,10 @@ class CloudStorageApplicationTests {
 		//check if stored username and password?
 		homePage.waitUntilHomePageVisible();
 		assertEquals("Home", driver.getTitle());
-
 		//USER LOG OUT
 		homePage.logout();
 		loginPage.waitUntilLoginPageVisible();
 		assertEquals("Login", driver.getTitle()); //check goes to Login page when press Log Out
-
 		//VERIFY HOME PAGE NO LONGER ACCESSIBLE
 		driver.get("http://localhost:" + this.port + "/home");
 		threadSleepSeconds(1);
@@ -185,7 +179,6 @@ class CloudStorageApplicationTests {
 		credentialPage.addCredential(testCredentialUrl, testUsername, testPassword);
 		credentialPage.logout();
 		userLoginForTest(user);
-
 		credentialPage.gotoCredentialsTab();
 		credentialPage.editCredential(editedTestCredentialUrl, editedTestUsername, editedTestPassword);
 		assertEquals(editedTestCredentialUrl, credentialPage.getUrlOnCredentialPage());
@@ -197,18 +190,19 @@ class CloudStorageApplicationTests {
 		assertEquals(editedTestUsername, credentialProperties.getUsername());
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
+	@Test
+	public void _3c_testDeleteCredentialAndVerifyNotDisplayed(){
+		User user = addUser();
+		userLoginForTest(user);
+		credentialPage.gotoCredentialsTab();
+		credentialPage.addCredential(testCredentialUrl, testUsername, testPassword);
+		credentialPage.logout();
+		userLoginForTest(user);
+		credentialPage.gotoCredentialsTab();
+		credentialPage.deleteCredential();
+		assertEquals(0, credentialPage.getCountOfCredentials());
+		assertThrows(NoSuchElementException.class, () -> credentialPage.getUrlOnCredentialPage());
+	}
 
 	//******** methods to support @Test methods *************************
 	public User addUser(){
@@ -247,8 +241,4 @@ class CloudStorageApplicationTests {
 		} catch(InterruptedException ie){
 		}
 	}
-
-
-
-
 }
