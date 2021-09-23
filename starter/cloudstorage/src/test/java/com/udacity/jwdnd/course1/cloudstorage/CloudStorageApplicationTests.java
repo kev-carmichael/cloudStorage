@@ -43,14 +43,14 @@ class CloudStorageApplicationTests {
 	private static final String testLastName = "TestLastName";
 	private static final String testUsername = "TestUsername";
 	private static final String testPassword = "TestPassword";
-	private static final String editedUsername = "EditedUsername";
-	private static final String editedPassword = "EditedPassword";
+	private static final String editedTestUsername = "EditedTestUsername";
+	private static final String editedTestPassword = "EditedTestPassword";
 	private static final String testNoteTitle = "TestNoteTitle";
 	private static final String testNoteDescription = "TestNoteDescription";
-	private static final String editedNoteTitle = "EditedNoteTitle";
-	private static final String editedNoteDescription = "EditedNoteDescription";
+	private static final String editedTestNoteTitle = "EditedTestNoteTitle";
+	private static final String editedTestNoteDescription = "EditedTestNoteDescription";
 	private static final String testCredentialUrl = "https://www.selenium.dev";
-	private static final String editedCredentialUrl = "https://www.selenium.dev/selenium/docs/api/java/org/openqa/selenium/WebDriver.html";
+	private static final String editedTestCredentialUrl = "https://www.selenium.dev/selenium/docs/api/java/org/openqa/selenium/WebDriver.html";
 
 
 	@BeforeAll
@@ -141,10 +141,10 @@ class CloudStorageApplicationTests {
 		userLoginForTest();
 		notePage.addNote(testNoteTitle, testNoteDescription);
 		//EDIT NOTE
-		notePage.editNote(editedNoteTitle, editedNoteDescription);
+		notePage.editNote(editedTestNoteTitle, editedTestNoteDescription);
 		//VERIFY IS DISPLAYED
-		assertEquals(editedNoteTitle, notePage.getTitleOnNotePage());
-		assertEquals(editedNoteDescription, notePage.getDescriptionOnNotePage());
+		assertEquals(editedTestNoteTitle, notePage.getTitleOnNotePage());
+		assertEquals(editedTestNoteDescription, notePage.getDescriptionOnNotePage());
 	}
 
 	@Test
@@ -177,7 +177,25 @@ class CloudStorageApplicationTests {
 		assertEquals(testPassword, credentialAttributes.getPassword());
 	}
 
+	@Test
+	public void _3b_testViewCredentialsVerifyPasswordEncryptedEditVerifyChanges(){
+		User user = addUser();
+		userLoginForTest(user);
+		credentialPage.gotoCredentialsTab();
+		credentialPage.addCredential(testCredentialUrl, testUsername, testPassword);
+		credentialPage.logout();
+		userLoginForTest(user);
 
+		credentialPage.gotoCredentialsTab();
+		credentialPage.editCredential(editedTestCredentialUrl, editedTestUsername, editedTestPassword);
+		assertEquals(editedTestCredentialUrl, credentialPage.getUrlOnCredentialPage());
+		assertEquals(editedTestUsername, credentialPage.getUsernameOnCredentialPage());
+		assertNotEquals(editedTestPassword, credentialPage.getPasswordOnCredentialPage());
+		credentialPage.editFirstCredential();
+		Credential credentialProperties = credentialPage.getCredentialAttributes();
+		assertEquals(editedTestCredentialUrl, credentialProperties.getUrl());
+		assertEquals(editedTestUsername, credentialProperties.getUsername());
+	}
 
 
 
