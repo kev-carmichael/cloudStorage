@@ -21,7 +21,7 @@ public class CredentialPage {
     private final By credentialPassword = By.id("credentialPassword"); //in cred page table
     private final By credentialModalLabel = By.id("credentialModalLabel");
     private final By inputCredentialUrl = By.id("credential-url"); //in modal
-    private final By inputCredentialUser = By.id("credential-username"); //in modal
+    private final By inputCredentialUsername = By.id("credential-username"); //in modal
     private final By inputCredentialPassword = By.id("credential-password"); //in modal
     private final By saveCredentialButton = By.id("saveCredentialButton");
     private final By saveSuccessMsg = By.id("saveSuccessMsg");
@@ -90,7 +90,7 @@ public class CredentialPage {
     //*****************************************************************************
     //**need method here to verify password encrypted or in main test app driver?**
     //*****************************************************************************
-    public void deleteNote(){
+    public void deleteCredential(){
         clickElement(deleteCredentialButton);
         waitUntilElementInvisible(addANewCredentialButton);
         threadSleepSeconds(2);
@@ -122,9 +122,9 @@ public class CredentialPage {
 
     public void inputAndSaveCredential(String url, String username, String password){
         waitUntilElementVisible(credentialModalLabel); //credential pop-up window
-        inputElementText(credentialUrl, url);
-        inputElementText(credentialUsername, username);
-        inputElementText(credentialPassword, password);
+        inputElementText(inputCredentialUrl, url);
+        inputElementText(inputCredentialUsername, username);
+        inputElementText(inputCredentialPassword, password);
         clickElement(saveCredentialButton);
         threadSleepSeconds(2);
         waitUntilElementVisible(saveSuccessMsg);
@@ -134,7 +134,6 @@ public class CredentialPage {
         waitUntilElementVisible(saveSuccessMsg); //MSG SAVED GO TO HOME
         clickElement(saveSuccessMsg); // CLICK TO GO TO HOME
         threadSleepSeconds(2);
-        waitUntilElementInvisible(credentialModalLabel); // WAIT TILL NOT IN cred TAB
         waitUntilElementClickable(logoutButton); //WAIT UNTIL LOGOUT BUTTON AVAIL - PROVE NOT IN cred TAB
         waitUntilElementClickable(navNotesTab); //WAIT UNTIL NOTES TAB BUTTON AVAIL - PROVE NOT IN cred TAB
     }
@@ -144,10 +143,10 @@ public class CredentialPage {
         waitUntilElementVisible(credentialModalLabel);
     }
 
-    public Credential getCredentialProperties() {
+    public Credential getCredentialAttributes() {
         Credential credential = new Credential();
         credential.setUrl(driver.findElement(inputCredentialUrl).getAttribute("value"));
-        credential.setUsername(driver.findElement(inputCredentialUser).getAttribute("value"));
+        credential.setUsername(driver.findElement(inputCredentialUsername).getAttribute("value"));
         credential.setPassword(driver.findElement(inputCredentialPassword).getAttribute("value"));
         return credential;
     }
