@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
-@Controller
-@RequestMapping("/error")
+//@Controller
 public class ErrorMessageController implements ErrorController {
     //credit mentor Yuri
     //@GetMapping()
+    @RequestMapping("/error")
     public String showError(HttpServletRequest request){
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         if (status != null) {
