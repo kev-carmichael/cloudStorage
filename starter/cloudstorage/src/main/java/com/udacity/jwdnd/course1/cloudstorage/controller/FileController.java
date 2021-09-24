@@ -36,8 +36,11 @@ public class FileController {
         File file = fileService.viewFileFromId(fileId);
         InputStream inputStream = new ByteArrayInputStream(file.getFileData());
         InputStreamResource inputStreamResource = new InputStreamResource(inputStream);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "fileName="+file.getFileName()).
-                contentType(MediaType.parseMediaType(file.getContentType())).body(inputStreamResource);
+        return ResponseEntity.ok().
+                header(HttpHeaders.CONTENT_DISPOSITION, "fileName="+file.getFileName()).
+                contentLength(Long.parseLong(file.getFileSize())).
+                contentType(MediaType.APPLICATION_OCTET_STREAM).
+                body(inputStreamResource);
     }
 
 
