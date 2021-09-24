@@ -57,7 +57,7 @@ public class FileController {
                 return displayFileErrorMsg( "That file name already exists", model);
             }
         }else {
-            return displayFileErrorMsg( "Error. Select file to upload first", model);
+            return displayFileErrorMsg( "Select file to upload first", model);
         }
     }
 

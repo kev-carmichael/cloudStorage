@@ -20,13 +20,13 @@
             </div>
             <div class="alert alert-danger fill-parent" th:if="${otherErrorMsg}">
                 <h1 class="display-5">Error</h1>
-                <h1 class="display-5" th:text="${otherErrorMsg}"></h1>
+                <h5 class="text-dark" th:text="${otherErrorMsg}"></h5>
                 <span>Click <a th:href="@{/home}">here</a> to return to home page.</span>
             </div>
             <div class="alert alert-danger fill-parent" th:if="${fileErrorMsg}">
                 <h1 class="display-5">Error</h1>
-                <span th:text="${fileErrorMsg}}">Example Error Message</span>
-                <span>Click <a th:ref="@{/home}" >here</a> to continue.</span>
+                <h5 class="text-dark" th:text="${fileErrorMsg}"></h5>
+                <span>Click <a th:href="@{/home}">here</a> to return to home page.</span>
             </div>
         </div>
     </body>
