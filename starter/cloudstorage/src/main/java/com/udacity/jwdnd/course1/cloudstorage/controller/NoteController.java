@@ -35,14 +35,22 @@ public class NoteController {
         Optional<Integer> noteId = Optional.ofNullable(note.getNoteId());
         if (noteId.isEmpty()) {
             return addNote(note, model, userFromId);
-        } else return editNote(note, model, userFromId);
+        } else if(note.getNoteDescription().length()<=1000){
+            return editNote(note, model, userFromId);
+        } else {
+            return displayOtherErrorMsg("Note description exceeds 1000 characters (including white space)", model);
+        }
     }
 
-    private String addNote(Note note, Model model, int userFromId){
-        if(noteService.isOnlyNote(userFromId, note.getNoteTitle(), note.getNoteDescription())){
-            return displayResult(model, noteService.addNote(note, userFromId));
-        } else{
-            return displayOtherErrorMsg( "Note already exists", model);
+    private String addNote(Note note, Model model, int userFromId) {
+        if (note.getNoteDescription().length() <= 1000) {
+            if (noteService.isOnlyNote(userFromId, note.getNoteTitle(), note.getNoteDescription())) {
+                return displayResult(model, noteService.addNote(note, userFromId));
+            } else {
+                return displayOtherErrorMsg("Note already exists", model);
+            }
+        } else {
+            return displayOtherErrorMsg("Note description exceeds 1000 characters (including white space)", model);
         }
     }
 
@@ -55,7 +63,7 @@ public class NoteController {
     }
 
     private String displayOtherErrorMsg(String msg, Model model){
-        model.addAttribute("otherErrorMsg", true);
+        model.addAttribute("otherErrorMsg", msg);
         return "result";
     }
 
