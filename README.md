@@ -1,7 +1,7 @@
 # Cloud Storage
-The Cloud Storage full-stack web app can be used for creating, viewing, editing and deleting files, notes and credentials.
+Cloud Storage is a web-based personal storage application utilising Spring Boot, Thymeleaf, HTML, Spring Security, MyBatis and Java.
 
-Cloud Storage app utilises Spring Boot with Thymeleaf/HTML front end, Spring Security, MyBatis for data storage and Java for the back end.
+Cloud Storage is used for uploading, viewing, editing and deleting files, notes and user credentials.
 
 Run cloudstorage\src\main\java\com\udacity\jwdnd\course1\cloudstorage\CloudStorageApplication.java
 
